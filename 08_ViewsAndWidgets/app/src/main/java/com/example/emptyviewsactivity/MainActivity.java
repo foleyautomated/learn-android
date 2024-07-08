@@ -1,6 +1,8 @@
 package com.example.emptyviewsactivity;
 
+import android.content.Intent;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,19 +30,37 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-//        EditText myEditText = findViewById(R.id.myEditText);
-//        String inputText = myEditText.getText().toString();
+        Button btn = findViewById(R.id.button2);
+        btn.setOnClickListener((new View.OnClickListener() {
 
-//        Button myButton = findViewById(R.id.myBtn);
-//        myButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MainActivity.this, "You Did it! You clicked the button!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+            @Override
+            public void onClick(View v) {
+                toSecondActivity();
+            }
+        }));
 
-        ImageView myImageView = findViewById(R.id.myImageView);
-        myImageView.setImageResource(R.drawable.signature_no_background);
+        Button btn2 = findViewById(R.id.gotoWebPage);
+        btn2.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                openWebPage();
+            }
+        });
+
+
+    }
+
+    public void openWebPage() {
+        Uri webpage = Uri.parse("https://www.youtube.com");
+        //THe system tries to access the resources given its type.
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        startActivity(intent);
+
+    }
+
+    public void toSecondActivity() {
+        Intent intent = new Intent(this, SecondActivity.class);
+        startActivity(intent);
     }
 }
