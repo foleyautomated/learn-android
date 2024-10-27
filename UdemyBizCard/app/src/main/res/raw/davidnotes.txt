@@ -1,0 +1,160 @@
+# functions
+
+fun one() {
+
+}
+
+fun sayHello() {
+    //Interpolation is easy in Kotlin--It's liek `${typescript}`, but `$someValue rest of string` instead.
+
+}
+
+# lambdas
+
+fun add(a:Int, b:Int) : Int {
+    return a + b;
+}
+#name    #type               #Params
+val sum: (Int, Int) -> Int = {a, b-> a + b}
+                                     #Body (returned from here)
+
+# A Lambda
+val dogYears: (Int) -> Int = {a -> a * 7}
+
+# 'It' Keyword to simplify the above lambada:
+val dogYears: (Int) -> Int = {it * 7} //If you only pass one thing in, you don't need to explicitly name it. You can just refer to the current value as "it"
+
+
+# Returning "Unit"
+val name: (String) -> Unit {print(it)} //'Unit' Return
+
+# Trailing Lambdas - IF THE LAST PARAM DEFINED BY YOUR FUNCTION IS A LAMBDA TYPE, YOU CAN JUST TACK THAT ONTO THE CALL AND IT'LL USE IT!!!!
+fun enhancedMessage(message: String, funAsParameter: () -> Int) { //We can pass a function to a function as a Param. "funAsParaeter" takes no args, but returns an int.
+        println("$message, ${funAsParameter()}")
+    }
+}
+
+enhancedMessage("Hello, David") {
+    add(5, 5) //using this syntax, Kotlin knows to pass 'add' into the final function param of 'enhanced message'
+}
+^^Identical to above
+enhancedMEssage("Hello, David", () -> {
+    return 42;
+})
+
+//Collections
+Variables: var, val.
+
+myMutableList.removeAt(5) //Modifying collectionsx
+.get(someIndex) returns item by index.can also do myMutableList[someIndex]
+
+# Sets: When Order Matters
+`mutableSetOf(1,2,3`
+
+@ Map
+mapOf("Up" to 1, "Down" to 2, "Left" to 3)
+
+
+# Filters
+val listOfMonths = listOf(blah blah blah);
+val longMonths = listOfMonths.filter(it.days > 30)
+
+# Classes
+Kotlin does something smart: Instead of having constructor params defined as argumens on various constructors, it just sticks all the possible in-args directly to the top of the class:
+class Car(
+    var color: String,
+    var model: String) {
+
+    init {
+        if(color == "Green") {
+            blah blah blah
+        }
+    }
+
+}
+
+# Interfaces and Implementation --> Feels alot like extension;
+interface ClickEvent {
+    fun onClick(message: String) //An empty method to be implemented
+}
+
+class Button(val label: String): ClickEvent { //implementation looks like normal extension
+    overrride fun onClick(message: string) {
+        //Body defined here
+    }
+}
+
+# Extension Functions 😲😲😲😲😲😲😲😲😲
+fun main() {
+    "hello!".myExtensionFunction("Something")
+}
+
+fun String.myExtensionFunction(toAppend: String): String {
+    return this.plus(toAppend) //'this' is the current instance of the type, in our case, a String.
+}
+//COuld also be done like this:
+fun String.myExtensionFunction(toAppend: String): String = this.plus(toAppend) //Same Same but different
+
+//Data Classes 💡💡💡💡💡💡 DTO's with built-in flair
+fun main() {
+    /**var - mutable ..*/
+
+    val person = Person()
+        name = "Joe",
+        lastName = "Ball",
+        age = 23)
+
+    //Many built in methods, because it is a data class:
+    person.copy(..)
+    person.equals(...)
+    person.etc
+    person.blah blah blah properties
+
+    val listOfPeople = listOf(person,
+                        Person(....),
+                        Person(....),
+                        Person(....),
+
+    listOfPeople.forEach { item ->
+        println(item.age)
+    }
+
+}
+
+data class Person(val name: String, val lastName: string, val age: Int) //Creates a DTO, with common data methods already attached 😍😍😍
+
+# Advanced Concepts
+## Generics
+//Imagine a class that finds stuff:
+class Finder(private val list: List<String>) {
+    fun fineItem(element: String, foundItem: (element: String?) -> Unit) { //last lambda param 👌👌
+        val itemFoundFist = list.filter {
+            it == element
+        }
+        if(itemFoundList.isNullOrEmtpy()) foundItem(null) else
+            foundItem(itemFoundList.first())
+    }
+}
+
+//Lets use our Finder:
+fun main() {
+    val listOfNames = listOf("fda", "fdafads"...)
+    val finder  Finder(list = listOfItems)
+    finder.findItem(element="fdafda") {
+        println("found something"
+    }
+
+}
+//The problem with the above is that our Finder only works for strings. What to do?
+//GENERICS
+Just use 'T' (as in Typescript/C#)
+class Finder<T>(private val list: List<T>) {
+
+}
+
+Worth noting, Kotlin does a good job at inferring <T> when you pass args in, so you don't need to specify the Type of a generic param, as you often need to in other languages.
+//Enum "Enumerated Type"; "To list thigns one by one"
+
+enum class Result {
+
+}
